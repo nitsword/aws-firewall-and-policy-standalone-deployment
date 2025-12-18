@@ -1,0 +1,36 @@
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
+# Temporarily commented out TG subnet IDs
+# variable "tg_subnet_ids" {
+#   description = "List of TG subnet IDs"
+#   type        = list(string)
+# }
+
+variable "firewall_subnet_ids" {
+  description = "List of firewall subnet IDs"
+  type        = list(string)
+}
+
+# variable "firewall_endpoint_cidr" {
+#   description = "CIDR block for firewall endpoint"
+#   type        = string
+# }
+
+# variable "firewall_endpoint_gw_id" {
+#   description = "Gateway ID for firewall endpoint"
+#   type        = string
+# }
+
+# Temporarily commented out TG routing variables
+# variable "tg_destination_cidr" {
+#   description = "Destination CIDR for TG route"
+#   type        = string
+# }
+
+# variable "tg_gateway_id" {
+#   description = "Gateway ID for TG route"
+#   type        = string
+# }
