@@ -66,7 +66,6 @@ data "aws_subnet" "firewall_subnets" {
 
   filter {
     name = "tag:Name"
-    # Matches the strict naming standard from Repo 1
     values = ["${var.application}-${var.env}-subnet-fw-${var.azs[count.index]}"]
   }
 }
@@ -82,12 +81,11 @@ data "aws_route_table" "tgw_rts" {
 
   filter {
     name = "tag:Name"
-    # Matches: ntw-dev-tg-rt-us-east-1a, etc.
     values = ["ntw-${var.env}-tg-rt-${var.azs[count.index]}"]
   }
 }
 
-# Find the single Firewall Route Table
+# single Firewall Route Table from vpc repo
 data "aws_route_table" "fw_rt" {
   filter {
     name   = "vpc-id"
@@ -96,7 +94,6 @@ data "aws_route_table" "fw_rt" {
 
   filter {
     name = "tag:Name"
-    # Matches: ntw-dev-fw-rt-us-east-1
     values = ["ntw-${var.env}-fw-rt-${var.region}"]
   }
 }
@@ -140,6 +137,28 @@ module "firewall" {
       subnet_id = s.id
     }
   ]
+}
+
+
+#  bucket created in vpc setup repo
+data "aws_s3_bucket" "nfw_logs" {
+  bucket = "ntw-${var.env}-firewall-logs-bucket"
+}
+
+# Configure Logging
+resource "aws_networkfirewall_logging_configuration" "this" {
+  firewall_arn = module.firewall.firewall_arn
+
+  logging_configuration {
+    log_destination_config {
+      log_destination = {
+        bucketName = data.aws_s3_bucket.nfw_logs.bucket
+        prefix     = "alerts"
+      }
+      log_destination_type = "S3"
+      log_type             = "ALERT"
+    }
+  }
 }
 
 module "routing" {

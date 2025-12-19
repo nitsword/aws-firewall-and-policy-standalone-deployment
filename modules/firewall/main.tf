@@ -25,6 +25,7 @@ dynamic "subnet_mapping" {
     for_each = var.subnet_mapping
     content {
       subnet_id = subnet_mapping.value.subnet_id
+      ip_address_type = "DUALSTACK"
     }
   }
     
