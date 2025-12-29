@@ -1,5 +1,5 @@
 locals {
-  #  ARN list for the policy references
+  # This stays to handle the ARN list for the policy references
   allowlist_arn_list = aws_networkfirewall_rule_group.domain_allowlist[*].arn
 }
 

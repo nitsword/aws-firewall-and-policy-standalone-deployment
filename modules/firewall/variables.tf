@@ -1,3 +1,6 @@
+# -------------------------------------------------------------
+# Existing Variables
+# -------------------------------------------------------------
 variable "firewall_name" {
   description = "Name of the firewall"
   type        = string

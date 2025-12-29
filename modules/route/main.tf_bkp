@@ -1,0 +1,55 @@
+resource "aws_route_table" "tg_rt" {
+  vpc_id = var.vpc_id
+
+  tags = {
+    Name = "tg-route-table"
+  }
+}
+
+resource "aws_route_table" "firewall_rt" {
+  vpc_id = var.vpc_id
+
+  tags = {
+    Name = "firewall-route-table"
+  }
+}
+
+# Temporarily commented out TG subnet associations
+# resource "aws_route_table_association" "tg_assoc" {
+#   count          = length(var.tg_subnet_ids)
+#   subnet_id      = var.tg_subnet_ids[count.index]
+#   route_table_id = aws_route_table.tg_rt.id
+# }
+
+# resource "aws_route_table_association" "firewall_assoc" {
+#   count          = length(var.firewall_subnet_ids)
+#   subnet_id      = var.firewall_subnet_ids[count.index]
+#   route_table_id = aws_route_table.firewall_rt.id
+# }
+
+# resource "aws_route" "firewall_endpoint_route" {
+#   route_table_id         = aws_route_table.firewall_rt.id
+#   destination_cidr_block = var.firewall_endpoint_cidr
+#   gateway_id             = var.firewall_endpoint_gw_id
+# }
+
+resource "aws_route_table_association" "firewall_assoc" {
+  count          = length(var.firewall_subnet_ids)
+  subnet_id      = var.firewall_subnet_ids[count.index]
+  route_table_id = aws_route_table.firewall_rt.id
+}
+
+resource "aws_route" "firewall_endpoint_route" {
+  route_table_id         = aws_route_table.firewall_rt.id
+  destination_cidr_block = aws_networkfirewall_firewall.inspection_firewall.firewall_status.firewall_endpoint.ip_address
+  gateway_id             = aws_networkfirewall_firewall.inspection_firewall.firewall_status.firewall_endpoint.gateway_id
+}
+
+
+
+# Temporarily commented out TG route
+# resource "aws_route" "tg_route" {
+#   route_table_id         = aws_route_table.tg_rt.id
+#   destination_cidr_block = var.tg_destination_cidr
+#   gateway_id             = var.tg_gateway_id
+# }

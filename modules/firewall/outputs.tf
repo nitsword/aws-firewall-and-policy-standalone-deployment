@@ -57,6 +57,7 @@ output "firewall_sync_states" {
   value       = aws_networkfirewall_firewall.inspection_firewall.firewall_status[0].sync_states
 }
 
+# modules/firewall/outputs.tf
 
 output "firewall_status" {
   description = "The status of the firewall, including the VPC endpoint IDs"

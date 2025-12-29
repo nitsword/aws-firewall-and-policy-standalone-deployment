@@ -66,7 +66,8 @@ data "aws_subnet" "firewall_subnets" {
 
   filter {
     name = "tag:Name"
-    values = ["${var.application}-${var.env}-subnet-fw-${var.azs[count.index]}"]
+    # Matches the strict naming standard from Repo 1
+    values = ["${var.application}-${var.env}-pvt-subnet-fw-${var.azs[count.index]}"]
   }
 }
 
@@ -81,11 +82,12 @@ data "aws_route_table" "tgw_rts" {
 
   filter {
     name = "tag:Name"
-    values = ["ntw-${var.env}-tg-rt-${var.azs[count.index]}"]
+    # Matches: ntw-dev-tg-rt-us-east-1a, etc.
+    values = ["ntw-${var.env}-vpc-pvt-tg-subnet-rttb-${var.azs[count.index]}"]
   }
 }
 
-# single Firewall Route Table from vpc repo
+# Find the single Firewall Route Table
 data "aws_route_table" "fw_rt" {
   filter {
     name   = "vpc-id"
@@ -94,7 +96,8 @@ data "aws_route_table" "fw_rt" {
 
   filter {
     name = "tag:Name"
-    values = ["ntw-${var.env}-fw-rt-${var.region}"]
+    # Matches: ntw-dev-fw-rt-us-east-1
+    values = ["ntw-${var.env}-vpc-pvt-fw-subnet-rttb-${var.region}"]
   }
 }
 
@@ -140,9 +143,9 @@ module "firewall" {
 }
 
 
-#  bucket created in vpc setup repo
+# Look up the bucket created in vpc setup repo
 data "aws_s3_bucket" "nfw_logs" {
-  bucket = "ntw-${var.env}-firewall-logs-bucket"
+  bucket = "ntw-${var.env}-tmo-firewall-logs-bucket"
 }
 
 # Configure Logging

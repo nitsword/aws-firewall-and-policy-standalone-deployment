@@ -172,6 +172,7 @@ variable "transit_gateway_id" {
   description = "Transit Gateway ID"
   type        = string
 }
+
 /*
 variable "secondary_cidr_blocks" {
   type        = list(string)
