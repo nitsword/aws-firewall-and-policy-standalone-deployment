@@ -1,7 +1,7 @@
 region = "us-east-1"
-vpc_id = "vpc-0ad451614830a0875"
+vpc_id = "vpc-05921b6b22f8446af"
 transit_gateway_id      = "tgw-09396a29da000e3c8"
-azs         = ["us-east-1a", "us-east-1b", "us-east-1d"]
+azs         = ["us-east-1a", "us-east-1b", "us-east-1c"]
 application = "ntw"
 env         = "dev"
 #rules_directory = "policy_config/dev/rules-fw1-us-east1"
