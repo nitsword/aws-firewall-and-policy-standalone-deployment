@@ -1,5 +1,5 @@
 region = "us-east-1"
-vpc_id = "vpc-05921b6b22f8446af"
+vpc_id = "vpc-0eaf602589016626a"
 transit_gateway_id      = "tgw-09396a29da000e3c8"
 azs         = ["us-east-1a", "us-east-1b", "us-east-1c"]
 application = "ntw"
@@ -28,54 +28,3 @@ rules_csv_path = "policy_config/dev/rule-fw1-us-east-1/dev_rules.csv"
 domain_rg_capacity = 100
 
 stateful_rule_group_objects = [ ]
-
-#stateful_rule_group_objects = [
-	# {
-	#   arn      = "arn:aws:network-firewall:us-east-1:359416636780:stateful-rulegroup/custom-rg-1"
-	#   priority = 40
-	# },
-	# {
-	#   arn      = "arn:aws:network-firewall:us-east-1:359416636780:stateful-rulegroup/custom-rg-2"
-	#   priority = 50
-	# }
-#]
-
-# Complex structured rules (used for testing)
-# domain_rules = [
-#  {
-#     priority     = 10
-#     action   = "PASS"
-#     protocol     = "TCP"
-#     source   = "ANY"
-#     source_port = "ANY"
-#     destination = "ANY" 
-#     destination_port = "443"
-#     direction = "FORWARD"
-#     rule_options = [
-#     {
-#     keyword = "sid"
-#     settings = ["2000001"]
-#     },
-#     {
-#     keyword = "tls_sni"
-#     settings = [".amazon.com"] 
-# }
-#     ]
-#   },
-#   {
-#     priority     = 20
-#     action   = "DROP"
-#     protocol  = "TCP"
-#     source  = "ANY"
-#     source_port = "ANY"
-#     destination = "ANY"
-#     destination_port = "22"
-#     direction   = "FORWARD"
-#     rule_options    = [
-#   {
-#     keyword = "sid"
-#     settings = ["2000002"]
-#     }
-#     ]
-#   }
-# ]
